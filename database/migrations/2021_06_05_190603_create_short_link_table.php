@@ -30,7 +30,7 @@ class CreateShortLinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('shortLinks', function (Blueprint $table) {
+        Schema::create('shortlinks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('link', 255);

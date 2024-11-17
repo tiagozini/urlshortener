@@ -39,7 +39,7 @@ class ShortlinkApiController extends Controller
 
     public function __construct(Request $request){
         $this->appUrl = env('APP_URL'). '/api/v1/';
-        $this->urlRedirect = env('APP_URL'). '/';
+        $this->urlRedirect = env('APP_URL'). '/api/v1/';
 
         if($request->expire != NULL){
             $this->expire = $request->expire;
@@ -53,7 +53,7 @@ class ShortlinkApiController extends Controller
         $this->short = $request->shortlink;
         $this->slug = $this->short ? Str::slug($this->short) : Str::random(8);
         $this->addDays = 7;
-        $this->default_expiry_date = date('d-m-Y', strtotime(date('d/m/Y').' + '.$this->addDays.' days'));
+        $this->default_expiry_date = date('d-m-Y', strtotime(date('m/d/Y').' + '.$this->addDays.' days'));
 
 
     }
@@ -80,7 +80,7 @@ class ShortlinkApiController extends Controller
 
         return response()->json([
             'shortlink' => $this->urlRedirect . $this->slug,
-        ], 200);
+        ], 201);
     }
 
 

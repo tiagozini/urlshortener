@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  us_web:
+    image: urlshortener:latest
+    build:
+      dockerfile: Dockerfile
+      target: us_web
+      context: .
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      us_db:
+        condition: service_healthy
+    container_name: us_web
+    networks:
+      - internal_net
+      - default
+  us_db:
+    platform: "linux/amd64"
+    image: mysql:5.7
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    ports:
+      - "3305:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    container_name: us_db
+    networks:
+      - default
+      - internal_net
+  phpmyadmin:
+    depends_on:
+      - us_db
+      - us_web
+    env_file:
+      - .env
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8098:80"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      PMA_PORT : "3305"
+      #PMA_HOST: "127.0.0.1"
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - phpmyadmin_data:/var/www/html/phpmyadmin_2
+    networks:
+      - internal_net
+
+networks:
+  default:
+    driver: bridge
+  internal_net:
+    driver: bridge
+
+volumes:
+  dbdata:
+  phpmyadmin_data:

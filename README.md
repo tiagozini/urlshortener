@@ -123,3 +123,19 @@ O redirect das urls também possuí cache.
 
 Durante os testes, utilizei o redis, mas sinta-se a vontade para utilizar outro banco de cache ou até mesmo em arquivo.
 
+## Docker
+### Criação do ambinete
+Para criar o banco de dados e a instância do gestor de banco de dados PHP My Admin, execute o comando:
+- docker-compose up -d
+
+Para atualizar os dados iniciais e criar as tabelas, execute o comando:
+- docker-compose exec us_web php artisan migrate:refresh --seed
+
+### Portas e Urls padrão
+O Url Shortener e os seus sistemas correlatos e estarão em executção nas urls e portas abaixo.
+
+| URL       | PORTA | SISTEMA       |
+|-----------|-------|---------------|
+| localhost | 9000 | urlshortener   |
+| localhost | 8089 | phpmyadmin     |
+| sistema   | 3305 | mysql          |
