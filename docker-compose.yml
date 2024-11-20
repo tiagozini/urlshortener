@@ -16,6 +16,7 @@ services:
       - "${APP_PORT}:80"
     volumes:
       - .:/var/www/html
+      - /var/www/html/vendor/
     depends_on:
       us_db:
         condition: service_healthy
