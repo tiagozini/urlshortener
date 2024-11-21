@@ -48,6 +48,6 @@ class CreateShortLinkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shortLinks');
+        Schema::dropIfExists('shortlinks');
     }
 }
