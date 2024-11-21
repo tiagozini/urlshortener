@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Shortlink::factory(20)->create();
+        Shortlink::factory(20)->create();
 
         $admin = new User();
         $admin->name = 'Leonardo Nascimento';

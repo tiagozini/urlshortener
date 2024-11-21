@@ -22,7 +22,7 @@ use App\Models\ShortLink;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class ShortLinkFactory extends Factory
+class ShortlinkFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -41,7 +41,7 @@ class ShortLinkFactory extends Factory
         return [
             'link' => $this->faker->url,
             'shortlink' => Str::random(8),
-            'expiration_date' => $this->faker->dateTimeInInterval($startDate = '+7 days', $interval = '+ 1 year', $timezone = null) 
+            'expiration_date' => $this->faker->dateTimeInInterval($startDate = '+7 days', $interval = '+ 1 year', $timezone = null)
         ];
     }
 }
